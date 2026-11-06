@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tu Nombre | Ingeniero electrónico</title>
+<meta name="description" content="Portafolio de proyectos de ingeniería electrónica: sistemas embebidos, diseño de PCB e instrumentación.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* ====== COLORES: cambia solo estas variables para personalizar ====== */
+  :root{
+    --board:#E6EEE4;      /* fondo, como máscara de soldadura clara */
+    --ink:#10261D;        /* texto */
+    --copper:#B0561A;     /* acento (pistas de cobre) */
+    --panel:#F4F8F2;      /* tarjetas */
+    --line:#B9C9B6;       /* bordes */
+    --muted:#4A6155;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--board:#0F2019;--ink:#E3EDE0;--copper:#E0894A;--panel:#163026;--line:#2C4A3D;--muted:#9DB5A5}
+  }
+  *{box-sizing:border-box;margin:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--board);color:var(--ink);font:400 1.05rem/1.65 "IBM Plex Sans",system-ui,sans-serif}
+  h1,h2,h3{font-family:"Bricolage Grotesque",system-ui,sans-serif;line-height:1.1}
+  a{color:inherit}
+  a:focus-visible,button:focus-visible{outline:3px solid var(--copper);outline-offset:3px}
+  .wrap{max-width:1040px;margin:0 auto;padding:0 1.25rem}
+
+  nav{position:sticky;top:0;background:var(--board);border-bottom:1px solid var(--line);z-index:5}
+  nav .wrap{display:flex;justify-content:space-between;align-items:center;padding-top:.8rem;padding-bottom:.8rem;gap:1rem;flex-wrap:wrap}
+  nav strong{font-family:"Bricolage Grotesque",sans-serif}
+  nav ul{display:flex;gap:1.25rem;list-style:none;padding:0}
+  nav a{text-decoration:none;color:var(--muted)}
+  nav a:hover{color:var(--copper)}
+
+  /* Hero con pistas de cobre */
+  .hero{padding:5rem 0 4rem;position:relative;overflow:hidden}
+  .hero h1{font-size:clamp(2.4rem,7vw,4.6rem);font-weight:700;max-width:14ch}
+  .hero p{max-width:52ch;margin-top:1.25rem;color:var(--muted);font-size:1.15rem}
+  .btns{display:flex;gap:.75rem;margin-top:2rem;flex-wrap:wrap}
+  .btn{display:inline-block;padding:.7rem 1.3rem;border-radius:4px;text-decoration:none;font-weight:500;border:2px solid var(--copper)}
+  .btn.main{background:var(--copper);color:#fff}
+  .btn.alt{color:var(--copper)}
+  .traces{position:absolute;right:0;top:0;height:100%;width:45%;opacity:.55;pointer-events:none}
+  .traces path{fill:none;stroke:var(--copper);stroke-width:3;stroke-linecap:round;stroke-dasharray:900;stroke-dashoffset:900;animation:draw 2.4s ease-out forwards}
+  .traces circle{fill:var(--board);stroke:var(--copper);stroke-width:3}
+  @keyframes draw{to{stroke-dashoffset:0}}
+  @media (prefers-reduced-motion:reduce){.traces path{animation:none;stroke-dashoffset:0}}
+  @media (max-width:720px){.traces{display:none}}
+
+  section{padding:3.5rem 0;border-top:1px solid var(--line)}
+  section h2{font-size:2rem;margin-bottom:1.5rem}
+
+  /* Proyectos */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:1.5rem}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:6px;overflow:hidden;display:flex;flex-direction:column}
+  .card .img{aspect-ratio:16/10;background:repeating-linear-gradient(45deg,var(--line) 0 10px,var(--panel) 10px 20px);display:grid;place-items:center;color:var(--muted);font-size:.9rem}
+  .card img{width:100%;aspect-ratio:16/10;object-fit:cover;display:block}
+  .card .body{padding:1.1rem 1.2rem 1.3rem;display:flex;flex-direction:column;gap:.6rem;flex:1}
+  .card h3{font-size:1.3rem}
+  .card p{color:var(--muted);font-size:.98rem}
+  .tags{display:flex;flex-wrap:wrap;gap:.4rem;list-style:none;padding:0}
+  .tags li{border:1px solid var(--line);border-radius:99px;padding:.1rem .7rem;font-size:.82rem}
+  .card .links{margin-top:auto;padding-top:.6rem;display:flex;gap:1rem}
+  .card .links a{color:var(--copper);font-weight:500}
+
+  /* Habilidades */
+  .skills{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.5rem}
+  .skills h3{font-size:1.1rem;margin-bottom:.5rem}
+  .skills ul{padding-left:1.1rem;color:var(--muted)}
+
+  .about{display:grid;grid-template-columns:1fr;gap:1.5rem;max-width:68ch}
+  footer{border-top:1px solid var(--line);padding:2rem 0;color:var(--muted);font-size:.9rem}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <strong>Tu Nombre</strong>
+    <ul>
+      <li><a href="#proyectos">Proyectos</a></li>
+      <li><a href="#sobre-mi">Sobre mí</a></li>
+      <li><a href="#habilidades">Habilidades</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero">
+  <svg class="traces" viewBox="0 0 400 400" aria-hidden="true">
+    <path d="M0 80 H120 L170 130 H300 L340 90 H400"/>
+    <path d="M0 200 H80 L130 250 H260 L300 210 H400"/>
+    <path d="M0 320 H150 L200 270 H330 L370 310 H400"/>
+    <circle cx="120" cy="80" r="8"/><circle cx="300" cy="130" r="8"/>
+    <circle cx="260" cy="250" r="8"/><circle cx="150" cy="320" r="8"/>
+  </svg>
+  <div class="wrap">
+    <h1>Diseño sistemas electrónicos que funcionan en el mundo real</h1>
+    <p>Soy ingeniero electrónico especializado en sistemas embebidos, diseño de PCB e instrumentación. Aquí encuentras mis proyectos con esquemáticos, código y resultados medidos.</p>
+    <div class="btns">
+      <a class="btn main" href="#proyectos">Ver proyectos</a>
+      <a class="btn alt" href="#contacto">Contactarme</a>
+    </div>
+  </div>
+</header>
+
+<main>
+<section id="proyectos">
+  <div class="wrap">
+    <h2>Proyectos</h2>
+    <div class="grid">
+
+      <!-- PROYECTO 1: copia y pega este bloque <article> para agregar más -->
+      <article class="card">
+        <!-- Para usar tu foto: borra el <div class="img"> y descomenta la línea de <img> -->
+        <div class="img">Foto del proyecto</div>
+        <!-- <img src="img/proyecto1.jpg" alt="Descripción de la foto del proyecto 1"> -->
+        <div class="body">
+          <h3>Estación meteorológica IoT</h3>
+          <p>Nodo de bajo consumo con sensores de temperatura y humedad que envía datos por LoRa. Autonomía medida de 8 meses con batería.</p>
+          <ul class="tags"><li>ESP32</li><li>LoRa</li><li>KiCad</li></ul>
+          <div class="links">
+            <a href="https://github.com/tu-usuario/proyecto1">Código</a>
+            <a href="docs/proyecto1.pdf">Esquemático (PDF)</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="img">Foto del proyecto</div>
+        <div class="body">
+          <h3>Fuente de poder regulable</h3>
+          <p>Fuente conmutada de 0 a 30 V con control digital y protección contra sobrecorriente. Eficiencia medida del 89 %.</p>
+          <ul class="tags"><li>Buck converter</li><li>STM32</li><li>Altium</li></ul>
+          <div class="links">
+            <a href="https://github.com/tu-usuario/proyecto2">Código</a>
+            <a href="docs/proyecto2.pdf">Informe (PDF)</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="img">Foto del proyecto</div>
+        <div class="body">
+          <h3>Filtro digital en FPGA</h3>
+          <p>Filtro FIR implementado en VHDL para procesar señales de audio en tiempo real, validado con simulación y pruebas en hardware.</p>
+          <ul class="tags"><li>VHDL</li><li>FPGA</li><li>MATLAB</li></ul>
+          <div class="links">
+            <a href="https://github.com/tu-usuario/proyecto3">Código</a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<section id="sobre-mi">
+  <div class="wrap">
+    <h2>Sobre mí</h2>
+    <div class="about">
+      <p>Escribe aquí 3 o 4 líneas sobre ti: dónde estudiaste, en qué áreas trabajas y qué tipo de problemas te gusta resolver.</p>
+      <p>Si buscas empleo o proyectos freelance, dilo claramente: qué tipo de rol te interesa y desde dónde puedes trabajar.</p>
+    </div>
+  </div>
+</section>
+
+<section id="habilidades">
+  <div class="wrap">
+    <h2>Habilidades</h2>
+    <div class="skills">
+      <div><h3>Hardware</h3><ul><li>Diseño de PCB</li><li>Electrónica analógica y de potencia</li><li>Instrumentación y mediciones</li></ul></div>
+      <div><h3>Software y firmware</h3><ul><li>C / C++</li><li>Python</li><li>RTOS, I2C, SPI, UART</li></ul></div>
+      <div><h3>Herramientas</h3><ul><li>KiCad / Altium</li><li>LTspice</li><li>MATLAB, Git</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<section id="contacto">
+  <div class="wrap">
+    <h2>Contacto</h2>
+    <p>¿Tienes un proyecto o una oportunidad? Escríbeme.</p>
+    <div class="btns">
+      <a class="btn main" href="mailto:tucorreo@ejemplo.com">tucorreo@ejemplo.com</a>
+      <a class="btn alt" href="https://www.linkedin.com/in/tu-usuario">LinkedIn</a>
+      <a class="btn alt" href="https://github.com/tu-usuario">GitHub</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">© 2026 Tu Nombre</div>
+</footer>
+
+</body>
+</html>
