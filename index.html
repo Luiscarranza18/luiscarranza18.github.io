@@ -4,60 +4,72 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Tu Nombre | Ingeniero electrónico</title>
-<meta name="description" content="Portafolio de proyectos de ingeniería electrónica: sistemas embebidos, diseño de PCB e instrumentación.">
+<meta name="description" content="Portafolio de Tu Nombre, ingeniero electrónico: sistemas embebidos, diseño de PCB e instrumentación.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  /* ====== COLORES: cambia solo estas variables para personalizar ====== */
+  /* ====== PALETA (tomada de tu imagen). Cambia solo estas variables ====== */
   :root{
-    --board:#E6EEE4;      /* fondo, como máscara de soldadura clara */
-    --ink:#10261D;        /* texto */
-    --copper:#B0561A;     /* acento (pistas de cobre) */
-    --panel:#F4F8F2;      /* tarjetas */
-    --line:#B9C9B6;       /* bordes */
-    --muted:#4A6155;
+    --bg:#1b1c20;        /* fondo */
+    --panel:#31353d;     /* tarjetas */
+    --line:#445979;      /* bordes y líneas */
+    --accent:#92cecf;    /* acento (cian) */
+    --text:#f1f2f9;      /* texto principal */
+    --muted:#aeb7ca;     /* texto secundario */
+    --on-accent:#1b1c20; /* texto sobre botones de acento */
   }
-  @media (prefers-color-scheme: dark){
-    :root{--board:#0F2019;--ink:#E3EDE0;--copper:#E0894A;--panel:#163026;--line:#2C4A3D;--muted:#9DB5A5}
+  @media (prefers-color-scheme: light){
+    :root{--bg:#f1f2f9;--panel:#ffffff;--line:#c3cbdc;--accent:#445979;--text:#1b1c20;--muted:#4b5566;--on-accent:#f1f2f9}
   }
   *{box-sizing:border-box;margin:0}
   html{scroll-behavior:smooth}
-  body{background:var(--board);color:var(--ink);font:400 1.05rem/1.65 "IBM Plex Sans",system-ui,sans-serif}
+  body{background:var(--bg);color:var(--text);font:400 1.05rem/1.65 "IBM Plex Sans",system-ui,sans-serif}
   h1,h2,h3{font-family:"Bricolage Grotesque",system-ui,sans-serif;line-height:1.1}
   a{color:inherit}
-  a:focus-visible,button:focus-visible{outline:3px solid var(--copper);outline-offset:3px}
+  a:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
   .wrap{max-width:1040px;margin:0 auto;padding:0 1.25rem}
 
-  nav{position:sticky;top:0;background:var(--board);border-bottom:1px solid var(--line);z-index:5}
+  nav{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
   nav .wrap{display:flex;justify-content:space-between;align-items:center;padding-top:.8rem;padding-bottom:.8rem;gap:1rem;flex-wrap:wrap}
-  nav strong{font-family:"Bricolage Grotesque",sans-serif}
+  nav strong{font-family:"Bricolage Grotesque",sans-serif;font-size:1.1rem}
   nav ul{display:flex;gap:1.25rem;list-style:none;padding:0}
   nav a{text-decoration:none;color:var(--muted)}
-  nav a:hover{color:var(--copper)}
+  nav a:hover{color:var(--accent)}
 
-  /* Hero con pistas de cobre */
-  .hero{padding:5rem 0 4rem;position:relative;overflow:hidden}
-  .hero h1{font-size:clamp(2.4rem,7vw,4.6rem);font-weight:700;max-width:14ch}
-  .hero p{max-width:52ch;margin-top:1.25rem;color:var(--muted);font-size:1.15rem}
+  /* Portada */
+  .hero{padding:5.5rem 0 4.5rem;position:relative;overflow:hidden}
+  .hero .hi{color:var(--accent);font-weight:500;margin-bottom:.6rem;font-size:1.15rem}
+  .hero h1{font-size:clamp(2.8rem,8vw,5.2rem);font-weight:700}
+  .hero h2{font-size:clamp(1.3rem,3.4vw,1.9rem);font-weight:500;color:var(--muted);margin-top:.6rem}
+  .hero p{max-width:54ch;margin-top:1.4rem;color:var(--muted);font-size:1.1rem}
   .btns{display:flex;gap:.75rem;margin-top:2rem;flex-wrap:wrap}
-  .btn{display:inline-block;padding:.7rem 1.3rem;border-radius:4px;text-decoration:none;font-weight:500;border:2px solid var(--copper)}
-  .btn.main{background:var(--copper);color:#fff}
-  .btn.alt{color:var(--copper)}
-  .traces{position:absolute;right:0;top:0;height:100%;width:45%;opacity:.55;pointer-events:none}
-  .traces path{fill:none;stroke:var(--copper);stroke-width:3;stroke-linecap:round;stroke-dasharray:900;stroke-dashoffset:900;animation:draw 2.4s ease-out forwards}
-  .traces circle{fill:var(--board);stroke:var(--copper);stroke-width:3}
+  .btn{display:inline-block;padding:.7rem 1.3rem;border-radius:4px;text-decoration:none;font-weight:500;border:2px solid var(--accent)}
+  .btn.main{background:var(--accent);color:var(--on-accent)}
+  .btn.alt{color:var(--accent)}
+  .btn:hover{filter:brightness(1.1)}
+  .traces{position:absolute;right:0;top:0;height:100%;width:42%;opacity:.5;pointer-events:none}
+  .traces path{fill:none;stroke:var(--line);stroke-width:3;stroke-linecap:round;stroke-dasharray:900;stroke-dashoffset:900;animation:draw 2.4s ease-out forwards}
+  .traces circle{fill:var(--bg);stroke:var(--accent);stroke-width:3}
   @keyframes draw{to{stroke-dashoffset:0}}
   @media (prefers-reduced-motion:reduce){.traces path{animation:none;stroke-dashoffset:0}}
-  @media (max-width:720px){.traces{display:none}}
+  @media (max-width:760px){.traces{display:none}}
 
   section{padding:3.5rem 0;border-top:1px solid var(--line)}
   section h2{font-size:2rem;margin-bottom:1.5rem}
 
+  /* Sobre mí */
+  .about{display:grid;grid-template-columns:220px 1fr;gap:2rem;align-items:start}
+  .photo{width:220px;aspect-ratio:1;border-radius:50%;border:3px solid var(--accent);background:var(--panel);display:grid;place-items:center;color:var(--muted);font-size:.9rem;overflow:hidden}
+  .photo img{width:100%;height:100%;object-fit:cover}
+  .about p+p{margin-top:1rem}
+  .about p{color:var(--muted);max-width:62ch}
+  @media (max-width:640px){.about{grid-template-columns:1fr}}
+
   /* Proyectos */
   .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:1.5rem}
   .card{background:var(--panel);border:1px solid var(--line);border-radius:6px;overflow:hidden;display:flex;flex-direction:column}
-  .card .img{aspect-ratio:16/10;background:repeating-linear-gradient(45deg,var(--line) 0 10px,var(--panel) 10px 20px);display:grid;place-items:center;color:var(--muted);font-size:.9rem}
+  .card .img{aspect-ratio:16/10;background:repeating-linear-gradient(45deg,var(--line) 0 10px,var(--panel) 10px 20px);display:grid;place-items:center;color:var(--text);font-size:.9rem}
   .card img{width:100%;aspect-ratio:16/10;object-fit:cover;display:block}
   .card .body{padding:1.1rem 1.2rem 1.3rem;display:flex;flex-direction:column;gap:.6rem;flex:1}
   .card h3{font-size:1.3rem}
@@ -65,14 +77,13 @@
   .tags{display:flex;flex-wrap:wrap;gap:.4rem;list-style:none;padding:0}
   .tags li{border:1px solid var(--line);border-radius:99px;padding:.1rem .7rem;font-size:.82rem}
   .card .links{margin-top:auto;padding-top:.6rem;display:flex;gap:1rem}
-  .card .links a{color:var(--copper);font-weight:500}
+  .card .links a{color:var(--accent);font-weight:500}
 
   /* Habilidades */
   .skills{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.5rem}
-  .skills h3{font-size:1.1rem;margin-bottom:.5rem}
+  .skills h3{font-size:1.1rem;margin-bottom:.5rem;color:var(--accent)}
   .skills ul{padding-left:1.1rem;color:var(--muted)}
 
-  .about{display:grid;grid-template-columns:1fr;gap:1.5rem;max-width:68ch}
   footer{border-top:1px solid var(--line);padding:2rem 0;color:var(--muted);font-size:.9rem}
 </style>
 </head>
@@ -82,8 +93,8 @@
   <div class="wrap">
     <strong>Tu Nombre</strong>
     <ul>
-      <li><a href="#proyectos">Proyectos</a></li>
       <li><a href="#sobre-mi">Sobre mí</a></li>
+      <li><a href="#proyectos">Proyectos</a></li>
       <li><a href="#habilidades">Habilidades</a></li>
       <li><a href="#contacto">Contacto</a></li>
     </ul>
@@ -99,16 +110,36 @@
     <circle cx="260" cy="250" r="8"/><circle cx="150" cy="320" r="8"/>
   </svg>
   <div class="wrap">
-    <h1>Diseño sistemas electrónicos que funcionan en el mundo real</h1>
-    <p>Soy ingeniero electrónico especializado en sistemas embebidos, diseño de PCB e instrumentación. Aquí encuentras mis proyectos con esquemáticos, código y resultados medidos.</p>
+    <p class="hi">Hola, mi nombre es</p>
+    <h1>Tu Nombre Apellido</h1>
+    <h2>Ingeniero electrónico</h2>
+    <p>Me especializo en sistemas embebidos, diseño de PCB e instrumentación. Actualmente busco oportunidades donde pueda aportar en el desarrollo de hardware y firmware. Aquí encontrarás los proyectos que he construido.</p>
     <div class="btns">
-      <a class="btn main" href="#proyectos">Ver proyectos</a>
-      <a class="btn alt" href="#contacto">Contactarme</a>
+      <a class="btn main" href="#proyectos">Ver mis proyectos</a>
+      <a class="btn alt" href="#contacto">Contáctame</a>
     </div>
   </div>
 </header>
 
 <main>
+<section id="sobre-mi">
+  <div class="wrap">
+    <h2>Sobre mí</h2>
+    <div class="about">
+      <div class="photo">
+        <!-- Para usar tu foto: borra el texto de abajo y descomenta la línea de <img> -->
+        Tu foto
+        <!-- <img src="img/perfil.jpg" alt="Foto de perfil de Tu Nombre"> -->
+      </div>
+      <div>
+        <p>Soy ingeniero electrónico graduado de la Universidad X. Me apasiona convertir ideas en prototipos funcionales, desde el esquemático hasta el firmware.</p>
+        <p>He trabajado en proyectos de IoT, fuentes de poder y procesamiento digital de señales. Disfruto documentar mi trabajo y aprender nuevas herramientas.</p>
+        <p>Fuera del laboratorio, me gusta (escribe aquí un pasatiempo o interés personal).</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section id="proyectos">
   <div class="wrap">
     <h2>Proyectos</h2>
@@ -159,16 +190,6 @@
   </div>
 </section>
 
-<section id="sobre-mi">
-  <div class="wrap">
-    <h2>Sobre mí</h2>
-    <div class="about">
-      <p>Escribe aquí 3 o 4 líneas sobre ti: dónde estudiaste, en qué áreas trabajas y qué tipo de problemas te gusta resolver.</p>
-      <p>Si buscas empleo o proyectos freelance, dilo claramente: qué tipo de rol te interesa y desde dónde puedes trabajar.</p>
-    </div>
-  </div>
-</section>
-
 <section id="habilidades">
   <div class="wrap">
     <h2>Habilidades</h2>
@@ -194,7 +215,7 @@
 </main>
 
 <footer>
-  <div class="wrap">© 2026 Tu Nombre</div>
+  <div class="wrap">© 2026 Tu Nombre Apellido</div>
 </footer>
 
 </body>
