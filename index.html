@@ -9,7 +9,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
 <style>
-
+  
+  /* ====== PALETA (tomada de tu imagen). Cambia solo estas variables ====== */
   :root{
     --bg:#1b1c20;        /* fondo */
     --panel:#31353d;     /* tarjetas */
@@ -18,9 +19,10 @@
     --text:#f1f2f9;      /* texto principal */
     --muted:#aeb7ca;     /* texto secundario */
     --on-accent:#1b1c20; /* texto sobre botones de acento */
+    --nav-bg:#101114;    /* barra superior (más oscura) */
   }
   @media (prefers-color-scheme: light){
-    :root{--bg:#f1f2f9;--panel:#ffffff;--line:#c3cbdc;--accent:#445979;--text:#1b1c20;--muted:#4b5566;--on-accent:#f1f2f9}
+    :root{--bg:#f1f2f9;--panel:#ffffff;--line:#c3cbdc;--accent:#445979;--text:#1b1c20;--muted:#4b5566;--on-accent:#f1f2f9;--nav-bg:#1b1c20}
   }
   *{box-sizing:border-box;margin:0}
   html{scroll-behavior:smooth}
@@ -30,12 +32,14 @@
   a:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
   .wrap{max-width:1040px;margin:0 auto;padding:0 1.25rem}
 
-  nav{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+  nav{position:sticky;top:0;background:var(--nav-bg);border-bottom:2px solid var(--accent);z-index:5}
   nav .wrap{display:flex;justify-content:space-between;align-items:center;padding-top:.8rem;padding-bottom:.8rem;gap:1rem;flex-wrap:wrap}
-  nav strong{font-family:"Bricolage Grotesque",sans-serif;font-size:1.1rem}
+  nav strong{font-family:"Bricolage Grotesque",sans-serif;font-size:1.1rem;color:#f1f2f9}
   nav ul{display:flex;gap:1.25rem;list-style:none;padding:0}
-  nav a{text-decoration:none;color:var(--muted)}
-  nav a:hover{color:var(--accent)}
+  nav a{text-decoration:none;color:#c5cce0}
+  nav a:hover{color:#92cecf}
+  nav a:focus-visible{outline-color:#92cecf}
+
 
   /* Portada */
   .hero{padding:5.5rem 0 4.5rem;position:relative;overflow:hidden}
