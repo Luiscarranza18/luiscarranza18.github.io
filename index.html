@@ -9,7 +9,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  
   /* ====== PALETA (tomada de tu imagen). Cambia solo estas variables ====== */
   :root{
     --bg:#1b1c20;        /* fondo */
@@ -29,8 +28,9 @@
   body{background:var(--bg);color:var(--text);font:400 1.05rem/1.65 "IBM Plex Sans",system-ui,sans-serif}
   h1,h2,h3{font-family:"Bricolage Grotesque",system-ui,sans-serif;line-height:1.1}
   a{color:inherit}
-  a:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+  a:focus-visible,button:focus-visible,.track:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
   .wrap{max-width:1040px;margin:0 auto;padding:0 1.25rem}
+  [hidden]{display:none!important}
 
   nav{position:sticky;top:0;background:var(--nav-bg);border-bottom:2px solid var(--accent);z-index:5}
   nav .wrap{display:flex;justify-content:space-between;align-items:center;padding-top:.8rem;padding-bottom:.8rem;gap:1rem;flex-wrap:wrap}
@@ -40,10 +40,9 @@
   nav a:hover{color:#92cecf}
   nav a:focus-visible{outline-color:#92cecf}
 
-
   /* Portada */
   .hero{padding:5.5rem 0 4.5rem;position:relative;overflow:hidden}
-  .hero .hi{color:var(--accent);font-weight:500;margin-bottom:.6rem;font-size:1.15rem}
+  .hero .hi{color:var(--accent);font-weight:500;margin-bottom:.6rem;margin-top:0;font-size:1.15rem}
   .hero h1{font-size:clamp(2.8rem,8vw,5.2rem);font-weight:700}
   .hero h2{font-size:clamp(1.3rem,3.4vw,1.9rem);font-weight:500;color:var(--muted);margin-top:.6rem}
   .hero p{max-width:54ch;margin-top:1.4rem;color:var(--muted);font-size:1.1rem}
@@ -56,7 +55,7 @@
   .traces path{fill:none;stroke:var(--line);stroke-width:3;stroke-linecap:round;stroke-dasharray:900;stroke-dashoffset:900;animation:draw 2.4s ease-out forwards}
   .traces circle{fill:var(--bg);stroke:var(--accent);stroke-width:3}
   @keyframes draw{to{stroke-dashoffset:0}}
-  @media (prefers-reduced-motion:reduce){.traces path{animation:none;stroke-dashoffset:0}}
+  @media (prefers-reduced-motion:reduce){.traces path{animation:none;stroke-dashoffset:0}html{scroll-behavior:auto}}
   @media (max-width:760px){.traces{display:none}}
 
   section{padding:3.5rem 0;border-top:1px solid var(--line)}
@@ -70,23 +69,52 @@
   .about p{color:var(--muted);max-width:62ch}
   @media (max-width:640px){.about{grid-template-columns:1fr}}
 
-  /* Proyectos */
+  /* Tarjetas de proyectos */
   .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:1.5rem}
-  .card{background:var(--panel);border:1px solid var(--line);border-radius:6px;overflow:hidden;display:flex;flex-direction:column}
-  .card .img{aspect-ratio:16/10;background:repeating-linear-gradient(45deg,var(--line) 0 10px,var(--panel) 10px 20px);display:grid;place-items:center;color:var(--text);font-size:.9rem}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:6px;overflow:hidden;display:flex;flex-direction:column;text-decoration:none;transition:transform .2s,border-color .2s}
+  .card:hover{transform:translateY(-4px);border-color:var(--accent)}
+  .ph{aspect-ratio:16/10;width:100%;background:repeating-linear-gradient(45deg,var(--line) 0 10px,var(--panel) 10px 20px);display:grid;place-items:center;color:var(--text);font-size:.9rem;text-align:center;padding:1rem}
   .card img{width:100%;aspect-ratio:16/10;object-fit:cover;display:block}
   .card .body{padding:1.1rem 1.2rem 1.3rem;display:flex;flex-direction:column;gap:.6rem;flex:1}
   .card h3{font-size:1.3rem}
   .card p{color:var(--muted);font-size:.98rem}
   .tags{display:flex;flex-wrap:wrap;gap:.4rem;list-style:none;padding:0}
   .tags li{border:1px solid var(--line);border-radius:99px;padding:.1rem .7rem;font-size:.82rem}
-  .card .links{margin-top:auto;padding-top:.6rem;display:flex;gap:1rem}
-  .card .links a{color:var(--accent);font-weight:500}
+  .more{margin-top:auto;padding-top:.4rem;color:var(--accent);font-weight:500}
 
   /* Habilidades */
   .skills{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.5rem}
   .skills h3{font-size:1.1rem;margin-bottom:.5rem;color:var(--accent)}
   .skills ul{padding-left:1.1rem;color:var(--muted)}
+
+  /* Página de detalle */
+  #detalle{padding:2.5rem 0 4rem}
+  .back{display:inline-block;color:var(--accent);text-decoration:none;font-weight:500;margin-bottom:1.5rem}
+  .back:hover{text-decoration:underline}
+  #detalle h1{font-size:clamp(2rem,5vw,3.2rem);margin-bottom:.8rem;outline:none}
+  #detalle .lead{color:var(--muted);max-width:62ch;margin:1rem 0 0}
+  .carousel{position:relative;margin:2rem 0}
+  .track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;border:1px solid var(--line);border-radius:6px;scrollbar-width:thin}
+  .slide{flex:0 0 100%;scroll-snap-align:center;margin:0;background:var(--panel)}
+  .slide img,.slide .ph{aspect-ratio:16/9;width:100%;object-fit:cover;display:block}
+  .slide figcaption{padding:.7rem 1rem;color:var(--muted);font-size:.95rem}
+  .cbtn{position:absolute;top:calc(50% - 2rem);width:2.8rem;height:2.8rem;border-radius:50%;border:2px solid var(--accent);background:var(--nav-bg);color:#92cecf;font-size:1.3rem;cursor:pointer}
+  .cbtn:hover{background:var(--accent);color:var(--on-accent)}
+  .cbtn.prev{left:.8rem}.cbtn.next{right:.8rem}
+  .count{text-align:right;color:var(--muted);font-size:.9rem;margin-top:.4rem}
+  .info{display:grid;grid-template-columns:2fr 1fr;gap:2.5rem;margin-top:2rem}
+  .info.solo{grid-template-columns:1fr;max-width:68ch}
+  @media (max-width:760px){.info{grid-template-columns:1fr}}
+  .info h2{font-size:1.4rem;margin:0 0 .6rem;color:var(--accent)}
+  .info .block{margin-bottom:1.8rem}
+  .info p,.info li{color:var(--muted)}
+  .info ul{padding-left:1.1rem}
+  .specs{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:1.2rem}
+  .specs dl{display:grid;gap:.7rem}
+  .specs dt{font-size:.85rem;color:var(--accent);font-weight:500}
+  .specs dd{margin:0}
+  .plinks{display:flex;flex-direction:column;gap:.6rem;margin-top:1.2rem}
+  .specs dl+.plinks{margin-top:1.4rem}
 
   footer{border-top:1px solid var(--line);padding:2rem 0;color:var(--muted);font-size:.9rem}
 </style>
@@ -105,6 +133,8 @@
   </div>
 </nav>
 
+<!-- ============ PÁGINA PRINCIPAL ============ -->
+<div id="home">
 <header class="hero">
   <svg class="traces" viewBox="0 0 400 400" aria-hidden="true">
     <path d="M0 80 H120 L170 130 H300 L340 90 H400"/>
@@ -117,7 +147,7 @@
     <p class="hi">Hola, mi nombre es</p>
     <h1>Luis Carranza</h1>
     <h2>Ingeniero Electrónico</h2>
-    <p>Profesional egresado de la Universidad del Valle de Guatemala con experiencia en sistemas electrónicos embebidos, diseño de circuitos eléctronicos, investigación y también en divulgación científica.</p>
+    <p>Profesional egresado de la Universidad del Valle de Guatemala con experiencia en sistemas electrónicos embebidos, diseño de circuitos electrónicos, investigación y también en divulgación científica.</p>
     <div class="btns">
       <a class="btn main" href="#proyectos">Ver mis proyectos</a>
       <a class="btn alt" href="#contacto">Contáctame</a>
@@ -131,12 +161,11 @@
     <h2>Sobre mí</h2>
     <div class="about">
       <div class="photo">
-        <!-- Para usar tu foto: borra el texto de abajo y descomenta la línea de <img> -->
-        <img src="img/profile_2.jpg" alt="Foto de perfil de Luis Carranza"> 
+        <img src="img/profile_2.jpg" alt="Foto de perfil de Luis Carranza">
       </div>
       <div>
-        <p>Soy ingeniero electrónico egresado de la Universidad del Valle de Guatemala (UVG) y actualmente estoy a cargo de las actividades de divulgación del proyecto QUETZAL-2 en centros educativos. Cuento con experiencia en la implementación de soluciones tecnológicas y el desarrollo de sistemas embebidos especializados en seguridad. </p>
-        <p>Mi interés por la investigación científica me ha llevado a participar en diversos proyectos de relevancia tecnológica desarrollados en la Facultad de Ingeniería de la UVG, de los cuales resalto los proyectos de QUETZAL-2, donde se desarrolla el segundo satélite guatemalteco, y El Gran Jaguar, el primer chip completamente diseñado en Guatemala. </p>
+        <p>Soy ingeniero electrónico egresado de la Universidad del Valle de Guatemala (UVG) y actualmente estoy a cargo de las actividades de divulgación del proyecto QUETZAL-2 en centros educativos. Cuento con experiencia en la implementación de soluciones tecnológicas y el desarrollo de sistemas embebidos especializados en seguridad.</p>
+        <p>Mi interés por la investigación científica me ha llevado a participar en diversos proyectos de relevancia tecnológica desarrollados en la Facultad de Ingeniería de la UVG, de los cuales resalto los proyectos de QUETZAL-2, donde se desarrolla el segundo satélite guatemalteco, y El Gran Jaguar, el primer chip completamente diseñado en Guatemala.</p>
         <p>Además de realizar actividades de divulgación, también organicé la primera edición del curso de vacaciones "Academia Aeroespacial UVG" en la cual estudiantes de diversificado pudieron tener un primer acercamiento hacia la ingeniería y el desarrollo de nanosatélites.</p>
       </div>
     </div>
@@ -146,23 +175,9 @@
 <section id="proyectos">
   <div class="wrap">
     <h2>Proyectos</h2>
-    <div class="grid">
-
-      <!-- PROYECTO 1: copia y pega este bloque <article> para agregar más -->
-      <article class="card">
-        <!-- Para usar tu foto: borra el <div class="img"> y descomenta la línea de <img> -->
-        <div class="img">Foto del proyecto</div>
-        <!-- <img src="img/proyecto1.jpg" alt="Descripción de la foto del proyecto 1"> -->
-        <div class="body">
-          <h3>Estación meteorológica IoT</h3>
-          <p>Nodo de bajo consumo con sensores de temperatura y humedad que envía datos por LoRa. Autonomía medida de 8 meses con batería.</p>
-          <ul class="tags"><li>ESP32</li><li>LoRa</li><li>KiCad</li></ul>
-          <div class="links">
-            <a href="https://github.com/tu-usuario/proyecto1">Código</a>
-            <a href="docs/proyecto1.pdf">Esquemático (PDF)</a>
-          </div>
-        </div>
-      </article>
+    <div class="grid" id="grid"></div>
+  </div>
+</section>
 
 <section id="habilidades">
   <div class="wrap">
@@ -186,10 +201,163 @@
   </div>
 </section>
 </main>
+</div>
+
+<!-- ============ PÁGINA DE DETALLE (se llena con JavaScript) ============ -->
+<main id="detalle" hidden>
+  <div class="wrap" id="detalle-contenido"></div>
+</main>
 
 <footer>
   <div class="wrap">© 2026 Luis Carranza. Todos los derechos reservados.</div>
 </footer>
 
+<script>
+/* =====================================================================
+   TUS PROYECTOS: edita, borra o copia un bloque { ... } para agregar otro.
+   - id: una sola palabra en minúsculas, sin espacios ni tildes (va en la URL)
+   - photos: rutas de tus fotos en la carpeta img/. Si el archivo aún no
+     existe, se muestra un recuadro de relleno.
+   - Los campos problem, role, results, specs y links son OPCIONALES:
+     si los borras, esa parte simplemente no aparece en la página.
+   ===================================================================== */
+const projects = [
+  {
+    id: "quetzal2",
+    title: "QUETZAL-2: segundo satélite guatemalteco",
+    summary: "Proyecto de la Facultad de Ingeniería de la UVG para desarrollar el segundo satélite guatemalteco.",
+    tags: ["Aeroespacial", "Investigación", "Divulgación"],
+    role: "Estoy a cargo de las actividades de divulgación del proyecto en centros educativos.",
+    // problem: "Describe aquí el objetivo o problema que busca resolver el proyecto.",
+    // results: ["Agrega un resultado o logro medible", "Otro resultado"],
+    // specs: { "Institución": "UVG", "Año": "2025" },
+    // links: [{ t: "Sitio del proyecto", u: "https://..." }],
+    photos: [
+      { src: "img/quetzal2-1.jpg", cap: "Actividad de divulgación en un centro educativo" },
+      { src: "img/quetzal2-2.jpg", cap: "Descripción de la foto" }
+    ]
+  },
+  {
+    id: "granjaguar",
+    title: "El Gran Jaguar: primer chip diseñado en Guatemala",
+    summary: "Primer chip completamente diseñado en Guatemala, desarrollado en la Facultad de Ingeniería de la UVG.",
+    tags: ["Diseño de chips", "Investigación"],
+    // role: "Describe tu participación en el proyecto.",
+    // results: ["Primer chip completamente diseñado en el país"],
+    photos: [
+      { src: "img/granjaguar-1.jpg", cap: "Descripción de la foto" },
+      { src: "img/granjaguar-2.jpg", cap: "Descripción de la foto" }
+    ]
+  },
+  {
+    id: "academia",
+    title: "Academia Aeroespacial UVG",
+    summary: "Curso de vacaciones para estudiantes de diversificado, con un primer acercamiento a la ingeniería y al desarrollo de nanosatélites.",
+    tags: ["Educación", "Aeroespacial", "Organización"],
+    role: "Organicé la primera edición del curso.",
+    // results: ["Número de estudiantes participantes", "Otro logro"],
+    photos: [
+      { src: "img/academia-1.jpg", cap: "Estudiantes durante el curso" },
+      { src: "img/academia-2.jpg", cap: "Descripción de la foto" }
+    ]
+  }
+];
+
+/* ================= A partir de aquí no necesitas editar ================= */
+const $ = s => document.querySelector(s);
+const home = $("#home"), detalle = $("#detalle"), cont = $("#detalle-contenido"), grid = $("#grid");
+const baseTitle = document.title;
+const list = a => (a || []);
+
+// Si una foto no existe, muestra un recuadro de relleno
+function ph(text){ const d = document.createElement("div"); d.className = "ph"; d.textContent = text; return d; }
+function img(src, alt){
+  const i = document.createElement("img");
+  i.src = src; i.alt = alt; i.loading = "lazy";
+  i.onerror = () => i.replaceWith(ph("Foto pendiente: " + alt));
+  return i;
+}
+const tagsHtml = p => list(p.tags).length ? `<ul class="tags">${p.tags.map(t => `<li>${t}</li>`).join("")}</ul>` : "";
+
+// Tarjetas de la página principal
+projects.forEach(p => {
+  const a = document.createElement("a");
+  a.className = "card"; a.href = "#proyecto-" + p.id;
+  a.appendChild(list(p.photos).length ? img(p.photos[0].src, p.title) : ph(p.title));
+  const b = document.createElement("div"); b.className = "body";
+  b.innerHTML = `<h3>${p.title}</h3><p>${p.summary}</p>${tagsHtml(p)}<span class="more">Ver proyecto completo →</span>`;
+  a.appendChild(b); grid.appendChild(a);
+});
+
+// Página de detalle
+function showDetail(p){
+  const specs = p.specs ? Object.entries(p.specs) : [];
+  const links = list(p.links);
+  const hasSide = specs.length || links.length;
+  const blocks = [
+    p.problem ? `<div class="block"><h2>El problema</h2><p>${p.problem}</p></div>` : "",
+    p.role ? `<div class="block"><h2>Mi rol</h2><p>${p.role}</p></div>` : "",
+    list(p.results).length ? `<div class="block"><h2>Resultados</h2><ul>${p.results.map(r => `<li>${r}</li>`).join("")}</ul></div>` : ""
+  ].join("");
+
+  cont.innerHTML = `
+    <a class="back" href="#proyectos">← Volver a proyectos</a>
+    <h1 tabindex="-1">${p.title}</h1>
+    ${tagsHtml(p)}
+    <p class="lead">${p.summary}</p>
+    ${list(p.photos).length ? `<div class="carousel" role="region" aria-label="Fotos del proyecto">
+      <div class="track" tabindex="0"></div>
+      <button class="cbtn prev" aria-label="Foto anterior">‹</button>
+      <button class="cbtn next" aria-label="Foto siguiente">›</button>
+      <p class="count" aria-live="polite"></p>
+    </div>` : ""}
+    ${(blocks || hasSide) ? `<div class="info${hasSide ? "" : " solo"}">
+      <div>${blocks}</div>
+      ${hasSide ? `<aside class="specs">
+        ${specs.length ? `<dl>${specs.map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`).join("")}</dl>` : ""}
+        ${links.length ? `<div class="plinks">${links.map(l => `<a class="btn alt" href="${l.u}">${l.t}</a>`).join("")}</div>` : ""}
+      </aside>` : ""}
+    </div>` : ""}`;
+
+  const track = cont.querySelector(".track");
+  if (track) {
+    const count = cont.querySelector(".count");
+    p.photos.forEach(ph_ => {
+      const f = document.createElement("figure"); f.className = "slide";
+      f.appendChild(img(ph_.src, ph_.cap));
+      const c = document.createElement("figcaption"); c.textContent = ph_.cap; f.appendChild(c);
+      track.appendChild(f);
+    });
+    const total = p.photos.length;
+    const update = () => { const i = Math.round(track.scrollLeft / track.clientWidth); count.textContent = (i + 1) + " / " + total; };
+    track.addEventListener("scroll", update); update();
+    cont.querySelector(".prev").onclick = () => track.scrollBy({ left: -track.clientWidth });
+    cont.querySelector(".next").onclick = () => track.scrollBy({ left: track.clientWidth });
+    track.addEventListener("keydown", e => {
+      if (e.key === "ArrowRight") track.scrollBy({ left: track.clientWidth });
+      if (e.key === "ArrowLeft") track.scrollBy({ left: -track.clientWidth });
+    });
+    if (total < 2) cont.querySelectorAll(".cbtn").forEach(b => b.hidden = true);
+  }
+
+  home.hidden = true; detalle.hidden = false;
+  document.title = p.title + " | Luis Carranza";
+  window.scrollTo(0, 0);
+  cont.querySelector("h1").focus({ preventScroll: true });
+}
+
+// Navegación por la URL (#proyecto-quetzal2, #proyectos, etc.)
+function route(){
+  const h = location.hash.slice(1);
+  const p = projects.find(x => "proyecto-" + x.id === h);
+  if (p) { showDetail(p); return; }
+  detalle.hidden = true; home.hidden = false; document.title = baseTitle;
+  const target = h && document.getElementById(h);
+  if (target) target.scrollIntoView(); else window.scrollTo(0, 0);
+}
+window.addEventListener("hashchange", route);
+route();
+</script>
 </body>
 </html>
+
